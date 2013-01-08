@@ -1,0 +1,19 @@
+[
+  {
+    Name = "Scooby Doo"
+    Age = 55
+    Sex = Male
+    Signature = [Text: "-Scoob"]
+  }
+  {
+    Name = "Wilma Flintstone"
+    Age = 4012
+    Sex = Female
+    <Signature>
+      Wilma T. Flintstone
+      <Bold>Technical Recruiter</Bold>
+      <Link Target="wilma.org">wilma.org</Link>
+    </Signature>
+  }
+]
+

@@ -1,0 +1,22 @@
+def Primitives = {
+	Nat64: Nat64
+	Nat32: Nat32
+	Nat16: Nat16
+	Nat8: Nat8
+	Int64: Int64
+	Int32: Int32
+	Int16: Int16
+	Int8: Int8
+
+	MNat64: Nat64?
+	MNat32: Nat32?
+	MNat16: Nat16?
+	MNat8: Nat8?
+	MInt64: Int64?
+	MInt32: Int32?
+	MInt16: Int16?
+	MInt8: Int8?
+
+	MMInt8: Int8??
+	MMMInt8: Int8???
+}

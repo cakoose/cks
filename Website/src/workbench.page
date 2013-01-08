@@ -1,0 +1,34 @@
+---
+title: "Workbench"
+--- name:content pipeline:erb
+<h1>
+Workbench
+</h1>
+
+<%
+require 'uri'
+
+def enc(file)
+	return URI.encode(IO.read(file))
+end
+%>
+
+<p>
+Enter a type definition into the left box and a value definition in the right box.
+</p>
+
+<applet code="cks.workbench.WorkbenchApplet" archive="cks-workbench.jar" width="100%" height="400">
+	<param name="java_arguments" value="-Dswing.aatext=true"/>
+	<param name="type" value="<%= enc("examples/students.tcks") %>">
+	<param name="value" value="<%= enc("examples/students.cks") %>"/>
+	<noapplet>
+	The CKS workbench is a Java applet.  It looks like your browser doesn't
+	display Java applets.
+	</noapplet>
+</applet>
+
+<p>
+If you want, you can download the JAR file (<a href="cks-workbench.jar">cks-workbench.jar</a>) and run it on your computer with the command:
+</p>
+
+<div class="code"><pre>java -jar cks-workbench.jar</pre></div>

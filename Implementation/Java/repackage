@@ -1,0 +1,69 @@
+#! /usr/bin/env /bin/bash
+set -e
+
+combine_() {
+	local name="$1" ; shift
+	local classpath="$1" ; shift
+	
+	echo "$name <- $@"
+	
+	mkdir "$name"
+	for member in "$@"; do
+		cp -r "../Bytecode/$member/"* "$name"
+	done
+
+	if [ -n "$classpath" ]; then
+		echo "Class-Path: $classpath" >> "$name.Manifest"
+	fi
+}
+
+combine() {
+	local name="$1" ; shift
+	local classpath="$1" ; shift
+	
+	combine_ "$name" "$classpath" "$@"
+
+	if [ -f "$name.Manifest" ]; then
+		jar 0cmf "$name.Manifest" "cks-$name.jar" -C "$name" .
+	else
+		jar 0cf "cks-$name.jar" -C "$name" .
+	fi
+}
+
+combine_entrypoint() {
+	local name="$1" ; shift
+	local classpath="$1" ; shift
+	local entrypoint="$1" ; shift
+	
+	combine_ "$name" "$classpath" "$@"
+	echo "Main-Class: $entrypoint" >> "$name.Manifest"
+	jar 0cmf "$name.Manifest" "cks-$name.jar" -C "$name" .
+}
+
+make
+cd Output
+
+[ ! -d repackaged ] || rm -r repackaged
+mkdir repackaged
+cd repackaged
+
+combine core "" \
+	core
+
+combine binary "cks-core.jar" \
+	binary
+
+combine text-api "cks-core.jar" \
+	text-api
+
+combine text-writer "cks-core.jar cks-text-api.jar" \
+	text-writer
+
+combine text-reader "cks-core.jar cks-text-api.jar" \
+	text-reader
+
+combine json "cks-core.jar cks-text-api.jar" \
+	json
+
+combine_entrypoint tool "cks-core.jar cks-binary.jar cks-text-api.jar cks-text-reader.jar cks-text-writer.jar cks-json.jar cakoose-util.jar" "cks.tool.Main" \
+	tool type gen dynamic workbench surface

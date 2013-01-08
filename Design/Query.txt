@@ -1,0 +1,9 @@
+----------------------------
+Query
+
+Efficient query mechanism.  Can help direct binary format optimizations.
+
+First pass: XPath-like selection.
+
+Second pass: XQuery?
+

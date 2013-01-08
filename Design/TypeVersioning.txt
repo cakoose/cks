@@ -1,0 +1,36 @@
+----------------------------
+Type Versioning
+
+Need to make it easy to move to new versions of a data type.
+
+If we had the ability to transform data from type X to type Y, the versioning problem would be a subset.
+
+Backward compatibility - Newer consumers can understand the older type.
+
+Future compatibility - Older consumers can understand the newer type.
+
+----------------------------
+Backward Compatibility (Newer programs can understand the older type).
+
+Most obvious idea: Given two types, automatically derive a transformation program that converts from one type to the other.
+
+U Penn's "Harmony" project is bidirectional.  How important is bidirectionality for our use case?  If the program modifies the data, we might want it to write the data back out in the original format when possible.  Can we get this right for anything other than superfluous differences?
+
+----------------------------
+Forward Compatibility (Older programs can understand the newer type).
+
+One simple mechanism is XML Schema's "xs:any" tag.  Just eats up anything that isn't recognized.  Need to preserve unrecognized data across modifications.
+
+If we can create a transformation program to go from NEW -> OLD, maybe we need a protocol for older programs to automatically locate the transformation program and apply it as required.
+
+----------------------------
+Sub-Component Versioning
+
+Can version sub-parts of the full type definition.  For example, if a type has a list of address book entries, a single data file could contain a single list in which the elements are different versions of the address book entry type.  Older clients would ignore the entry types they don't understand.
+
+----------------------------
+Typical Behaviour
+
+What do we know about incremental updates to a type that make them easier to deal with than the delta between two arbitrary types?
+
+Typically, future versions don't lose precision.  But, what about a future version that generalizes, throwing away unnecessary distinctions?

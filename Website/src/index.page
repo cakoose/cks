@@ -1,0 +1,71 @@
+---
+title: "CKS Data Format"
+template: "index.template"
+--- name:content pipeline:tags,maruku
+
+CKS is a language-neutral data serialization tool.
+- An efficient binary format _(like [Protocol Buffers][] and [Thrift][])_
+- A human-friendly text format _(like [JSON][] and [YAML][])_
+- Language-specific bindings generator _(like [Protocol Buffers][] and [Thrift][])_
+- Elegant data model _(tagged unions, parameterized types)_
+
+[XML]: http://en.wikipedia.com/wiki/XML
+[JSON]: http://en.wikipedia.com/wiki/JSON
+[YAML]: http://en.wikipedia.com/wiki/YAML
+[Protocol Buffers]: http://code.google.com/p/protobuf/
+[Thrift]: http://incubator.apache.org/thrift/
+
+## Learn More
+
+<table border="0" cellpadding="0" width="100%">
+<tr>
+<td valign="top">
+<ul>
+  <li><a href="overview.html">5-Minute language overview.</a></li>
+  <li><a href="workbench.html">Try it out online.</a></li>
+  <li><a href="datamodel.html">Data model comparison.</a></li>
+</ul>
+</td>
+<td valign="top">
+<ul>
+  <li><a href="reference.html">Full language reference.</a></li>
+  <li><a href="downloads.html">Downloads.</a></li>
+  <li><a href="contact.html">Contact.</a></li>
+</ul>
+</td>
+</tr>
+</table>
+
+## Example
+
+Let's say we wanted to store a simple list of students.  Here's a possible type definition (file: "students.tcks"):
+
+{pygmentsfile: {lang: "cks_type", filename: "examples/students.tcks"}}
+
+A sample value, using the text format (file: "students.cks"):
+
+{pygmentsfile: {lang: "cks_value", filename: "examples/students.cks"}}
+
+### Using it in your program.
+
+We currently support Java, C#, and Haskell.  Running the "cks" tool on the type file will generate helper code in the specified language.
+
+- [Java Example](example-java.html)
+- [C# Example](example-csharp.html)
+- [Haskell Example](example-haskell.html)
+
+### Using the "cks" tool to convert your data.
+
+The "cks" tool can convert between the text and binary formats.  Usage:
+
+    > cks convert <type-file> <type-name> <input> <output>
+
+For example, to convert the example value from text to binary, run:
+
+    > cks convert students.tcks Students \
+          text:students.cks binary:students.bin
+
+The binary version looks roughly like this:
+
+     2 10 "Scooby Doo" 0x0037 0
+       16 "Wilma Flintstone" 0x0fac 1

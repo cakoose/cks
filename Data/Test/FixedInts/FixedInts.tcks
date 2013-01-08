@@ -1,0 +1,10 @@
+def FixedInts = <
+	Int8: Int8
+	Int16: Int16
+	Int32: Int32
+	Int64: Int64
+	Nat8: Nat8
+	Nat16: Nat16
+	Nat32: Nat32
+	Nat64: Nat64
+>

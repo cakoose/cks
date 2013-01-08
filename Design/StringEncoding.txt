@@ -1,0 +1,15 @@
+We encode strings by encoding the Unicode codepoints.
+
+ASCII-friendly encoding:
+- 1 byte:  0 [7 bits]     (up to 0x7F)
+- 2 bytes: 10 [14 bits]   (up to 0x3FFF)
+- 3 bytes: 11 [22 bits]   (up to 0x3FFFFF, though we only need 0x10FFFF)
+
+International-friendly encoding:
+- 2 bytes: [16 bits, excluding surrogate range] (up to 0xFFFF)
+- 3 bytes: [11 bits from surrogate range] [8 bits]
+  (TODO: need one more bit; steal from private-use area?)
+
+We could allow the user to specify which encoding to use.  For example, "String" would tell CKS to use the ASCII-friendly encoding, while "String16" would tell CKS to use the international-friendly encoding.
+
+We do not use UTF-8 or UTF-16 because they both sacrifice space efficiency to gain certain other properties that we don't care about.

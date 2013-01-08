@@ -1,0 +1,67 @@
+----------------------------
+Default Values
+
+Need a way to say "if this value isn't specified, assume the following default value".
+
+1. Will the parser need to preserve information so that the consumer knows whether the value was explicit in the source file or just a default value?
+
+2. When writing data out, should the serializer omit a value if it is equivalent to the default?  Maybe we need to keep track of the default-ness of a value so that we can round-trip data properly.
+
+3. Are defaults just a convenience?  Should a canonical representation always explicitly specify every value?  Maybe default values should only be allowed in human-friendly formats.
+
+----------------------------
+Variant types
+
+Need to mark the option that is the default option and also provide default values.
+
+  def Error = <
+    GeneralError [default]: String = "Unknown Error"
+    NetworkError: String = "Unknown Network Error"
+  >
+
+Now, if the type "Error" is expected somewhere, it can be ommitted.  The default value will be the "GeneralError" option with value "Unknown Error".
+
+"NetworkError" has a default value but hasn't been marked the default option.  So when you use "NetworkError" without specifying a value, the default value will be used.
+
+Convenient for the "Maybe" type.
+
+  def Maybe(T) = <
+    Nothing [default]
+    Just: T
+  >
+
+----------------------------
+Record fields
+
+Explicitly specified default value:
+
+  def Person = {
+    Name: String = "<unknown>"
+  }
+
+Or, can inherit a default value that was previously defined for the field's type.  Should the default value be accepted any time the field is ommitted?  Probably want to force the type to be explicit.  For example, use a "?" to say "accept the type's default if this field is ommitted".
+
+  def Person = {
+    Name: Maybe(String)?
+  }
+
+----------------------------
+Record values
+
+  def Name = {
+    First: String
+    Last: String
+  } = {
+    First = "John"
+    Last = "Doe"
+  }
+
+Yes, I know it's ugly.  Maybe we can overload the field default syntax somehow?
+
+  def Name = {
+    First: String = "John"
+    Last: String = "Doe"
+  }
+
+Now we're not sure if the "Name" type has a default value or if the fields of the type each have default values.  There's a difference, right?
+

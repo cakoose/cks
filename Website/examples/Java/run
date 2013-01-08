@@ -1,0 +1,10 @@
+#! /bin/bash
+jar_dir="../../../Implementation/Java/Output/repackaged"
+
+jars=(cks-core.jar cks-text-writer.jar cks-text-reader.jar)
+cp=""
+for jar in "${jars[@]}"; do
+	cp="$cp:$jar_dir/$jar"
+done
+
+exec java -cp "$cp:out" AddShaggy "$@"

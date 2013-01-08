@@ -1,0 +1,24 @@
+#! /bin/bash
+set -e
+
+jar_dir="../../../Implementation/Java/Output/repackaged"
+
+if [ $# -ne 0 ]; then
+	echo "Expecting zero command-line arguments, received $#." 1>&2
+	exit 1
+fi
+
+jars=(cks-core.jar cks-text-reader.dll cks-text-writer.dll)
+cp=""
+for jar in "${jars[@]}"; do
+	cp="$cp:$jar_dir/$jar"
+done
+
+[ ! -d out ] || rm -r out
+mkdir -p out
+
+echo "- Generating bindings..."
+cks gen-java ../students.tcks org.example.students out/gen
+
+echo "- Compiling..."
+javac -cp "$cp" -d out AddShaggy.java out/gen/*.java

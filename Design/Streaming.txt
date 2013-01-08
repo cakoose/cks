@@ -1,0 +1,14 @@
+----------------------------
+Stronger Typing
+
+The current API is:
+
+   parse(InputStream) -> MassiveDataStructure
+
+Need a way to avoid loading the entire thing into memory.
+
+Simple solution is to have a weakly-typed SAX-like API.  But can we make it strongly typed (where each event is a marshalled object instead of the generic Value types)?
+
+Maybe combine with query language.  Converting stuff to lists covers the common case.  Lets say you have query string that transforms 'MassiveDataStructure' into 'List(OtherStructure)'
+
+   parseAndTransform(InputStream, queryString) -> Iterator<OtherStructure>

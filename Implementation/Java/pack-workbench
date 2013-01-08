@@ -1,0 +1,39 @@
+#! /usr/bin/env /bin/bash
+set -e
+
+bytecode_dir="Output/Bytecode"
+lib_dir="Libraries"
+out="Output/Workbench"
+
+modules=(core binary text-io text-writer text-reader json type surface dynamic workbench)
+libs=(cakoose-util.jar)
+
+[ ! -d "$out" ] || rm -r "$out"
+mkdir -p "$out"
+
+make
+
+sep=""
+input_list=""
+for lib in "$libs"; do
+	input_list="$input_list$sep$lib_dir/$lib"
+	sep=":"
+done
+for module in "${modules[@]}"; do
+	input_list="$input_list$sep$bytecode_dir/$module"
+	sep=":"
+done
+
+echo "Creating minimal jar..."
+java -jar Support/proguard-4.5.1.jar @workbench.proguard \
+	-injars "$input_list" \
+	-outjars "$out/cks-workbench.jar" \
+	-libraryjars "<java.home>/lib/rt.jar"
+
+echo "Main-Class: cks.workbench.Workbench" > "$out/Manifest"
+jar umf "$out/Manifest" "$out/cks-workbench.jar"
+
+echo "Creating pack200..."
+pack200 --no-keep-file-order --modification-time=latest \
+	"$out/cks-workbench.jar.pack.gz" \
+	"$out/cks-workbench.jar"

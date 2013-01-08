@@ -1,0 +1,15 @@
+---
+title: "Haskell Example"
+--- name:content pipeline:tags,maruku
+
+# Haskell Example
+
+First, generate Haskell code that can read and write the data types defined in "students.tcks":
+
+    > cks gen-haskell students.tcks Students gen/Students.hs
+
+The "Students" is the Haskell module that the generated classes will be assigned.  The "gen/Students.hs" is the file that the generated Haskell code will be written to.
+
+Example use of generated bindings:
+
+{pygmentsfile: {lang: "haskell", filename: "examples/Haskell/Main.hs"}}

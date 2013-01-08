@@ -1,0 +1,167 @@
+---
+title: "5-Minute Language Overview"
+--- name:content pipeline:tags,maruku
+# 5-Minute Language Overview
+
+## What is it?
+
+CKS is a language-neutral format for serializing data.  It includes a text format (similar to [XML][], [JSON][], and [YAML][]) and a binary format (like [Protocol Buffers][] and [Thrift][]).  It has advantages over those other formats, and we'll get to the reasons why, but let's first look at the basics.
+
+- **CKS values** are data values.
+- **CKS types** specify a structure for CKS values to follow (like an [XML Schema][] definition or a Protocol Buffers ".proto" file).
+
+[XML]: http://en.wikipedia.com/wiki/XML
+[JSON]: http://en.wikipedia.com/wiki/JSON
+[YAML]: http://en.wikipedia.com/wiki/YAML
+[Protocol Buffers]: http://code.google.com/p/protobuf/
+[Thrift]: http://incubator.apache.org/thrift/
+[XML Schema]: http://en.wikipedia.com/wiki/XML_Schema
+
+## What do types look like?
+
+Here's an example:
+
+{pygments::cks_type}
+def Person = {
+  Name: String     // 'Name' is a string
+  Age: Int         // 'Age' is an integer
+  Sex: <           // either 'Male' or 'Female'
+    Male
+    Female
+  >
+  Hobbies: List(String)    // a list of strings
+}
+{pygments}
+
+- `String` and `Int` are **primitive** types.
+- **Curly braces** define a **record** type, made up of one or more _fields_ (like C's `struct` or Java's classes).
+- **Angle brackets** define a **variant** type, made up of one or more _options_ (like a combination of C's `enum` and `union`).
+- `List`, `Set`, and `Map` are the three built-in **collection** types.
+
+## What do text values look like?
+
+The standard text syntax for values is similar to JSON and YAML.  Here is a value that matches the `Person` type defined above:
+
+{pygments::cks_value}
+{
+  Name = "Scooby Doo"
+  Age = 36
+  Sex = Male
+  Hobbies = [
+    "Ghosts"
+    "Lunch"
+  ]
+}
+{pygments}
+
+- Record values must have every field listed in the corresponding record type.
+- Variant values choose a single option from the corresponding variant type.
+- Collection values can have zero or more elements.  An empty collection is written "`[]`".
+
+Here's an exactly equivalent value written a different way:
+
+{pygments::cks_value}
+{
+  Age = 36, Sex = Male
+  Name = "Scooby Doo"
+  Hobbies = ["Ghosts", "Lunch"]
+}
+{pygments}
+
+- Record fields can appear in any order.
+- Multiple record fields or collection elements can appear on the same line when separated by a comma.
+
+## Bigger Example 
+
+Some other features of CKS types:
+- Type definitions can be nested.
+- A variant option can have data associated with it.
+- `Map` values are written `[Key -> Value, Key -> Value, ...]`
+
+Example type:
+
+{pygments::cks_type}
+def Person = {
+  Name: Name
+
+  def Name = {
+    First: String
+    Middle: List(String)
+    Last: String
+  }
+
+  Primary: ContactInfo
+  Other: Map(String,ContactInfo)
+
+  def ContactInfo = <
+    // Each option has a different type of associated value.
+    Email: String
+    Icq: Int
+    Cell: Phone
+    def Phone = { AreaCode: String, Number: String }
+  >
+
+}
+{pygments}
+
+Example value:
+
+{pygments::cks_value}
+{
+  Name = {
+    First = "Scooby"
+    Middle = ["Herbert", "Walker"]
+    Last = "Doo"
+  }
+
+  // Email is Scooby Doo's primary contact.
+  Primary = Email: "sdoo@nasa.gov"
+
+  // Scooby Doo has four other ways to be contacted.
+  Other = [
+    "Home"      -> Cell: { AreaCode = "510", Number = "555-1111" }
+    "Mobile IM" -> Icq: 19482963015214928710304821
+    "Work"      -> Cell: { AreaCode = "408", Number = "555-1111" }
+    "Personal"  -> Email: "lonelydog15@yahoo.com"
+  ]
+}
+{pygments}
+
+## Document-Style Data
+
+The standard CKS value syntax works fine for "normal" data values, but doesn't do so well with document-style text data.  Take the following HTML fragment, for example:
+
+{pygments::cks_value}
+<p>More info <a href="more/">here</a>.</p>
+{pygments}
+
+Represented in the standard CKS value syntax, it might look like:
+
+{pygments::cks_value}
+p: {
+  content = [
+    text: "More info"
+    a: {
+      href="more/"
+      content = [
+        text: "here"
+      ]
+    }
+    text: "."
+  ]
+}
+{pygments}
+
+Obviously, this isn't convenient to read or write.
+
+To deal with document-style data, CKS supports an alternative "markup" syntax that resembles HTML/XML.  In fact, the HTML fragment above can be parsed as-is by a CKS value parser.
+
+Internally, the same type system is used for both syntaxes, so they can be mixed:
+
+{pygments::cks_value}
+{
+  UserName = "lonelydog15"
+  Email = "lonelydog15@yahoo.com"
+  Signature = <p>More info <a href="more/">here</a>.</p>
+}
+{pygments}

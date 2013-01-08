@@ -1,0 +1,11 @@
+def FunctionalList = {
+	IntList: List(Int)
+	StringList: List(String)
+	MaybeBoolList: List(Bool?)
+}
+
+def List(T) = <
+	Cons: Cons(T)
+	Nil
+	def Cons(T) = { Head: T, Tail: List(T) }
+>

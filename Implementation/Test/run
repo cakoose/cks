@@ -1,0 +1,25 @@
+#! /bin/sh
+# ---------------------------------------------------
+# Wrapper around cks-test.  Makes things a little easier.
+# ---------------------------------------------------
+# Usage: ./run <impls> [tests...]
+#
+# Examples:
+#   ./run  Java,C#,Haskell
+#   ./run  Java,Haskell  AddressBook1  Ints/1  Ints/4
+# ---------------------------------------------------
+
+if [ $# -eq 0 ]; then
+	echo
+	echo "Usage: ./run <impls> [tests...]"
+	echo
+	echo "Examples:"
+	echo "  ./run Java,C#"
+	echo "  ./run Haskell AddressBook1 Ints/1 Ints/4"
+	echo
+	exit 1
+fi
+
+echo "Test output goes into \"Output/Test\"."
+
+exec ./cks-test .. ../../Data/Test Output/Test "$@"

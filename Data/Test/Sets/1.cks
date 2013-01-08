@@ -1,0 +1,6 @@
+{
+	IntSet = [1, 2, 3, 4]
+	StringSet = ["abcd", "efgh", "ijkl"]
+	MaybeBoolSet = [Set: True, Set: False, None]
+}
+

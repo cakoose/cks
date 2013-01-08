@@ -1,0 +1,8 @@
+[
+	[{ Key = "Goose" }, {Key = "Moose", Value = Set: 4}], []
+	[
+		{Key = "Poopy", Value = None}
+		{Key = "Poopy", Value = Set: -598327498729389213912873987293874234}
+		{Key = "Poopy", Value = Set: 0}
+	]
+]

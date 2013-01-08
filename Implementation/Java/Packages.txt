@@ -1,0 +1,41 @@
+cks-data
+- Maybe
+
+cks-binary (depends: data)
+- reader/writer
+
+cks-text-writer (depends: data)
+- writer
+- toString
+- IndentPrinter
+
+cks-text-reader (depends: data)
+- tokenizer
+- value parser
+- marshaller
+- SourcePos/Problem/ProblemException
+
+cks-tool (depends: *, cakoose-util)
+- type parser
+- generator
+
+gen=binary,text-write
+
+---------------------
+Alternative
+
+cks-core (no deps)
+- binary reader/writer
+- text writer
+- toString
+- Maybe
+- IndentPrinter
+
+cks-text-reader (depends: core)
+- tokenizer, parser
+- marshaller
+- SourcePos/Problem/ProblemException
+
+cks-tool (depends: *, cakoose-util)
+- type parser
+- generator

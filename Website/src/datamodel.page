@@ -1,0 +1,55 @@
+---
+title: "Advantages"
+--- name:content pipeline:maruku
+# Data Model
+
+This page compares CKS' data model with the data model of other formats.  By _data model_, we're talking about the logical representation of data and not the specifics of how data is serialized.
+
+Since [Protocol Buffers], [Thrift], [JSON] and [YAML] all have similar data models, we'll collectively refer to them as "PB/JSON".  XML's data model is sufficiently different to be given its own category.
+
+## Simplicity
+
+The PB/JSON data model is similar to the data model used in many programming languages.  It has records, collections, and optional values.  This is in sharp contrast to XML's more complicated data model which is unlike most programming languages.
+
+This simplicity and familiarity is probably what helped PB/JSON gain traction at a time where XML was entrenched.  For typical record-style data, which is extremely common, PB/JSON works much better than XML (simpler schema; easier for humans to read/write, easier to program with).
+
+CKS' data model is similar to PB/JSON with one important advantage: [variants](variants.html).
+
+## Document-Style Data
+
+XML's complicated data model _seems_ to have a compelling use case in representing document-style data (sometimes called "mixed content").  PB/JSON is not good at representing document-style data.  A common recommendation is to use PB/JSON for "most" of your data and use embedded XML for any document-style data.  You end up mixing two different data models.
+
+CKS, because of its support for variants, can handle document-style data relatively easily.  For example, the following is a valid CKS value:
+
+    {
+      UserName = "lonelydog"
+      Email = "lonelydog15@yahoo.com"
+      Signature = <p>More info <a href="more/">here</a>.</p>
+    }
+
+CKS' markup syntax is just _syntactic_ sugar -- it all transforms to the standard CKS data model.  The underlying representation is similar to how XML libraries represent document-style data:
+
+    {
+      UserName = "lonelydog"
+      Email = "lonelydog15@yahoo.com"
+      Signature = [
+        p: [
+          text: "More info "
+          a: {
+            href = "more/"
+            content = [ text: "here" ]
+          }
+          text: "."
+        ]
+      ]
+    }
+
+## Parameterized Types
+
+CKS supports parameterized types (like C++ templates or Java generics).  It comes in handy once in a while.
+
+[XML]: http://en.wikipedia.com/wiki/XML
+[JSON]: http://en.wikipedia.com/wiki/JSON
+[YAML]: http://en.wikipedia.com/wiki/YAML
+[Protocol Buffers]: http://code.google.com/p/protobuf/
+[Thrift]: http://incubator.apache.org/thrift/

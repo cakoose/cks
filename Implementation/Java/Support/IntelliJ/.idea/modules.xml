@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/binary.iml" filepath="$PROJECT_DIR$/binary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dynamic.iml" filepath="$PROJECT_DIR$/dynamic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gen.iml" filepath="$PROJECT_DIR$/gen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/json.iml" filepath="$PROJECT_DIR$/json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/surface.iml" filepath="$PROJECT_DIR$/surface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test.iml" filepath="$PROJECT_DIR$/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/text-api.iml" filepath="$PROJECT_DIR$/text-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/text-reader.iml" filepath="$PROJECT_DIR$/text-reader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/text-writer.iml" filepath="$PROJECT_DIR$/text-writer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tool.iml" filepath="$PROJECT_DIR$/tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/type.iml" filepath="$PROJECT_DIR$/type.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workbench.iml" filepath="$PROJECT_DIR$/workbench.iml" />
+    </modules>
+  </component>
+</project>

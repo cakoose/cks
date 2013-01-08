@@ -1,0 +1,5 @@
+def Maybe = {
+	I: Int? 
+	L: List(Int?)?
+	MMM: Int???
+}

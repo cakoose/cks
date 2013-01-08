@@ -1,0 +1,27 @@
+----------------------------
+Binary Format
+
+Need a binary format for speed and space efficiency.  There are lots of options here.
+
+The obvious option is to create a binary format that is isomorphic to the AST.  Explicitly set the length of every token in the stream to make lexing really fast.  Because it's an AST, parsing is already free.
+
+----------------------------
+Partial Loading
+
+Might want to make it easy for a reader to jump around in the binary format without loading everything.  You could implement a querying program that doesn't have to load (or even look at) the entire file if a given query doesn't require it.
+
+Could put one massive index at the front.  Or, have the index be split up into chunks and stored near the data it indexes.  That way, you don't even need to load the entire index.
+
+----------------------------
+Type-Dependent
+
+If we know that a given file is of a given type, we don't have to repeat any redundant information.  For example, instead of naming the fields of a record, we could just number them.  I think this is what Sun's "Fast Infoset" for XML does.
+
+Currently, we *need* to know the type to be able to parse a text-format value.  Why not require that for binaries as well?
+
+----------------------------
+Constant Pool
+
+
+
+----------------------------

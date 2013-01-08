@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Cakoose-Util">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../Libraries/cakoose-util.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../../Libraries/cakoose-util" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

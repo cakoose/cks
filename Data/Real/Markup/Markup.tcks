@@ -1,0 +1,15 @@
+def Document = {
+	Title: String
+	Body: List(Content)
+}
+
+def Content = <
+	Text*: String
+	Para: List(Content)
+	Link: Link
+>
+	
+def Link = {
+	Target: String
+	Content*: List(Content)
+}

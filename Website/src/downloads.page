@@ -1,0 +1,19 @@
+---
+title: "Downloads"
+--- name:content pipeline:maruku
+
+# Downloads
+
+Source Code: [tar.gz](files/Cks-2011-10-13.tar.gz)
+
+Includes:
+- Type compiler for Java, C#, and Haskell (requires [JDK]() 5+, GNU Make 3.81)
+- Java runtime library (requires [JDK]() 5+, GNU Make 3.81)
+- C# runtime library (requires [Microsoft .Net]() 2.x or [Mono]() 2.x)
+- Haskell runtime library (requires: [GHC]() 6.8+, [utf8-string])
+
+  [JDK]: http://java.sun.com/javase/downloads/
+  [Microsoft .Net]: http://msdn.microsoft.com/netframework/
+  [Mono]: http://www.go-mono.com/mono-downloads/
+  [GHC]: http://haskell.org/ghc/
+  [utf8-string]: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/utf8-string

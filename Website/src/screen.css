@@ -1,0 +1,101 @@
+body {
+	font-family: Georgia, Constantia, serif;
+	text-align: center;
+	color: black
+	padding: 0;
+	margin: 0;
+}
+
+pre, code {
+  font-family: Consolas, Andale Mono, Lucida Console, monospace;
+  font-size: 11pt;
+}
+
+#header, #index-header, #footer {
+	background-color: #00487d;
+	color: white;
+	width: 700px;
+	margin: 0 auto;
+	padding: 0.3em 0.5em 0.3em 0.5em;
+}
+
+#header, #index-header {
+	white-space: nowrap;
+	text-align: left;
+}
+
+#header a {
+	color: #fff;
+	font-size: 130%;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+#index-title {
+	font-size: 250%;
+	font-weight:normal
+}
+
+#footer {
+	font-size: 85%;
+	margin-top: 3em;
+}
+
+#content {
+	width: 700px;
+	text-align: left;
+	margin: 0 auto;
+}
+
+ul {
+	list-style-type: square;
+}
+
+a {
+	color: #00487d;
+	font-weight: normal;
+}
+
+pre {
+	border: 1px solid #bed5e6;
+	color: #082850;
+	margin-left: 4ex;
+	margin-right: 6ex;
+	padding: 1ex 1.5ex 1ex 1.5ex;
+}
+
+h1,h2,h3 {
+	font-weight: normal;
+	color: #003858;
+	margin-bottom: 0.2em;
+}
+h1 { 
+	font-size: 200%; letter-spacing: -1px; 
+}
+h2 { 
+	font-size: 155%;
+}
+h3 { 
+	font-size: 130%;
+}
+
+textarea, input {
+	border: 1px solid #bed5e6;
+}
+
+/* Keywords */
+span.kn,span.kd,span.k,span.kr {
+  font-weight: bold;
+  color: black;
+}
+
+/* Comments */
+span.c1 {
+  font-weight: bold;
+  color: #388048;
+}
+
+/* Literals */
+span.s,span.mi,span.m {
+  color: #486088;
+}

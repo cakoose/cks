@@ -1,0 +1,34 @@
+#! /bin/bash
+# Unix Build Script
+set -e
+
+if [ -d Output ]; then
+	rm -r Output
+fi
+mkdir Output
+
+echo "Compiling Cks.Core.dll"
+gmcs \
+	-target:library \
+	-reference:Mono.Security.dll \
+	-out:Output/Cks.Core.dll \
+	-debug \
+	-recurse:Source/Binary/*.cs -recurse:Source/Data/*.cs
+
+echo "Compiling Cks.Text.Writer.dll"
+gmcs \
+	-target:library \
+	-reference:Mono.Security.dll \
+	-reference:Output/Cks.Core.dll \
+	-out:Output/Cks.Text.Writer.dll \
+	-debug \
+	-recurse:Source/Text/Writer/*.cs
+
+echo "Compiling Cks.Text.Reader.dll"
+gmcs \
+	-target:library \
+	-reference:Mono.Security.dll \
+	-reference:Output/Cks.Core.dll \
+	-out:Output/Cks.Text.Reader.dll \
+	-debug \
+	-recurse:Source/Text/Reader/*.cs

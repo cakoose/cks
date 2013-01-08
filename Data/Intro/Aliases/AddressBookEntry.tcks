@@ -1,0 +1,15 @@
+{
+	Name: String
+	DaytimeContact: [Contact]
+	EveningContact: [Contact]
+
+	def Contact = <
+		Cell: PhoneNumber
+		Fax: PhoneNumber
+		ICQ: Integer
+		AIM: Handle
+	>
+
+	def PhoneNumber = String
+	def Handle = String
+}

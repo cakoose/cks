@@ -1,0 +1,73 @@
+------------------------
+Migration Language
+
+There are many uses of a transformation language.  The most important one, in my mind, is transformation for the purposes of migrating to a newer schema.  This is the one we need to compete with other RPC tools.
+
+------------------------
+Basic
+
+Example:
+
+    def ListFolderRequest = {
+        Path: String
+    }
+
+Lets say we want to upgrade the schema to be:
+
+    def ListFolderRequestV2 = {
+        Path: String
+        IncludeDeleted: Bool
+    }
+
+On the server, we'd want to only have to deal with V2.  So the transformation should be able to convert a V1 object to a V2 object.
+
+    transform(v1: ListFolderRequest) -> ListFolderRequestV2 = {
+        Path: v1.Path
+        IncludeDeleted: True
+    }
+
+------------------------
+Deeply Nested
+
+Let's say the record we're changing occurs deeply nested within other records.
+
+    def System = {
+        Mounts: Map(String,Tree)
+    }
+
+    def Tree = <
+        Leaf: FileData
+        Branch: Map(String,Tree)
+    >
+
+    def FileData = {
+        Size: Nat32
+        LastModified: Date
+    }
+
+Now lets add a field to FileData
+
+    def FileDataV2 = {
+        Size: Nat32
+        LastModified: Date
+        IconName: String?
+    }
+
+    transform(v1: FileData) -> FileDataV2 = {
+        Size = v1.Size
+        LastModified = v1.LastModified
+        IconName = None
+    }
+
+One way to do this is to maintain a V2 definition for every type that contains it.
+
+    def SystemV2 = {
+        Mounts: Map(String,TreeV2)
+    }
+
+    def TreeV2 = {
+        Leaf: FileDataV2
+        Branch: Map(String,TreeV2)
+    }
+
+This is tedious.  It would be a necessary tedium if we still wanted to use the original version.  However, we really only want to be able to read in the original version.  Once it's read it, we only ever want to deal with V2.

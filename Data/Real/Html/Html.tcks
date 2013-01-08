@@ -1,0 +1,31 @@
+def html =
+	head: {
+		title: String
+	}
+
+	body: {
+		text: Color?
+		bgcolor: Color?
+		Content*: List(Content)
+	}
+}
+
+def Content = <
+	Text*: String
+	h1: Node
+	h2: Node
+	h3: Node
+	h4: Node
+	h5: Node
+	p:  Node
+	em: Node
+>
+
+def Node = {
+	id: String?
+	class: String?
+	style: String?
+	Content*: List(Content)
+}
+
+def Color = String

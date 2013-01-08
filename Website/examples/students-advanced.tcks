@@ -1,0 +1,21 @@
+def Students = List(Student)
+
+def Student = {
+  Name: String
+  Age: Nat16      // unsigned 16-bit integer
+  Sex: Sex        // "Male" or "Female" (defined below)
+  Signature: List(Doc)
+}
+
+def Sex = < Male, Female >   // a "variant" type
+
+def Doc = <
+	Text*: String
+	Bold: List(Doc)
+	Link: Link
+>
+
+def Link = {
+	Content*: List(Doc)
+	Target: String
+}

@@ -1,0 +1,22 @@
+{
+	Nat64 = 1
+	Nat32 = 1
+	Nat16 = 1
+	Nat8 = 1
+	Int64 = 1
+	Int32 = 1
+	Int16 = 1
+	Int8 = 1
+
+	MNat64 = None
+	MNat32 = None
+	MNat16 = None
+	MNat8 = None
+	MInt64 = None
+	MInt32 = None
+	MInt16 = None
+	MInt8 = None
+
+	MMInt8 = None
+	MMMInt8 = None
+}

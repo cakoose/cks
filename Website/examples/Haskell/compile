@@ -1,0 +1,28 @@
+#! /bin/bash
+set -e
+
+lib_source_dir="../../../Implementation/Haskell/Source"
+
+if [ $# -ne 0 ]; then
+	echo "Expecting zero command-line arguments, received $#." 1>&2
+	exit 1
+fi
+
+[ ! -d out ] || rm -r out
+mkdir -p out
+mkdir -p out/gen
+mkdir -p out/obj
+mkdir -p out/hi
+
+echo "- Generating bindings..."
+cks gen-haskell ../students.tcks Students out/gen/Students.hs
+
+echo "- Compiling..."
+mkdir -p out/obj
+ghc --make -v0 \
+	-odir out/obj \
+	-hidir out/hi \
+	-o out/example \
+	-i"$lib_source_dir" \
+	Main.hs \
+	out/gen/Students.hs

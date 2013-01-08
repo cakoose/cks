@@ -1,0 +1,3 @@
+#! /bin/bash
+export MONO_PATH="../../../Implementation/C#/Output"
+exec mono --debug out/AddShaggy.exe "$@"

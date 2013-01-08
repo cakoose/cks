@@ -1,0 +1,15 @@
+---
+title: "Java Example"
+--- name:content pipeline:tags,maruku
+
+# Java Example
+
+First, generate Java code that can read and write the data types defined in "students.tcks":
+
+    > cks gen-java students.tcks org.example.students gen/
+
+The "org.example.students" is the Java package that the generated classes will be assigned.  The "gen/" is the directory that the generated files will be written to.
+
+Example use of generated bindings:
+
+{pygmentsfile: {lang: "java", filename: "examples/Java/AddShaggy.java"}}

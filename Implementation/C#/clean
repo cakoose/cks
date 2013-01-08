@@ -1,0 +1,4 @@
+#! /bin/bash
+if [ -d Output ]; then
+	rm -r Output
+fi

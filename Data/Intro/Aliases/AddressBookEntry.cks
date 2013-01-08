@@ -1,0 +1,6 @@
+{
+	Name = "Scooby Doo"
+
+	DaytimeContact = [Cell: "(123) 456-7890", AIM: "snoopy"]
+	EveningContact = [ICQ: 19576935435054653910]
+}

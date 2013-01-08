@@ -1,0 +1,392 @@
+---
+title: "Language Reference"
+--- name:content pipeline:tags,maruku
+# Language Reference
+
+By convention, type definitions are placed in "`.tcks`" files and value definitions are placed in "`.cks`" files.
+
+As you go through this tutorial, you can try stuff out interactively with the [workbench](workbench.html).
+
+## Comments
+
+Single-line comments start with "`//`" and continue until the end of the line.  Block comments start with "`/*`" and end with "`*/`".
+
+## Primitives
+
+The basic built-in primitive types are "`Bool`", "`Nat`", "`Int`", "`String`", and "`()`" (pronounced "void").
+
+ * `Bool` values are written either "`True`" or "`False`".
+ * `Nat` is for unbounded natural numbers.  Values are written as a sequence of base-10 digits.  There are also bounded versions: `Nat8`, `Nat16`, `Nat32`, `Nat64`.
+ * `Int` is for unbounded integers.  Values are written as a sequence of base-10 digits (with an optional negative sign in front).  There are also bounded versions: `Int8`, `Int16`, `Int32`, `Int64`.
+ * `String` values are written as a sequence of letters enclosed in double-quotes.
+ * The void type and void value are both written "`()`".  The purpose of the void type will become clearer in the "variants" section.
+
+## Records
+
+The first kind of compound type is the record.  Record **types** are defined by enclosing a set of fields in braces.
+
+{pygments::cks_type}
+def Person = {
+  First: String
+  Last: String
+  Age: Nat
+}
+{pygments}
+
+Multiple fields can be placed on the same line if separated by commas:
+
+{pygments::cks_type}
+def Person = { First: String, Last: String, Age: Nat }
+{pygments}
+
+Record **values** are defined by providing a value for all of the fields:
+
+{pygments::cks_value}
+{
+  First = "Scooby"
+  Last = "Doo"
+  Age = 45
+}
+{pygments}
+
+The order of fields doesn't matter.
+
+## Variants
+
+The second kind of compound type is the variant.  It is a type where only one of the members is used in any given value.  Variant **types** are defined by enclosing a set of options in angle brackets:
+
+{pygments::cks_type}
+def Color = <
+  Black: ()
+  Orange: ()
+  HtmlColor: String
+  Rgb: { Red: Nat8, Green: Nat8, Blue: Nat8 }
+>
+{pygments}
+
+The void type is useful here to say "this option carries no additional information".
+
+Variant **values** are defined by selecting one of the options and writing its tag name and value.  Below are _four separate values_ of type "`Color`", one per line:
+
+{pygments::cks_value}
+Orange: ()
+HtmlColor: "#ff20bb"
+Black: ()
+Rgb: { Red = 12, Green = 24, Blue = 0 }
+{pygments}
+
+As a shortcut for void-typed options, the "`:` `()`" part can be ommitted in both types and values.
+
+{pygments::cks_type}
+def Color = <
+  Black
+  Orange
+  HtmlColor: String
+  Rgb: { Red: Nat8, Green: Nat8, Blue: Nat8 }
+>
+{pygments}
+
+{pygments::cks_value}
+// "Color" values
+Orange
+HtmlColor: "#ff20bb"
+Black
+Rgb: { Red = 12, Green = 24, Blue = 0 }
+{pygments}
+
+## Collections
+
+To define a list type whose elements are of type "`String`", write: 
+
+{pygments::cks_type}
+List(String)
+{pygments}
+
+List values are written within square brackets as well.
+
+{pygments::cks_value}
+["Dog", "Cat", "Mouse"]
+
+[
+  "Dog", "Cat"
+  "Mouse"
+]
+{pygments}
+
+As with record entries, commas are only needed when multiple list elements appear on the same line.
+
+More generally, enclose any type in square brackets to create a list whose elements are of the enclosed type.
+
+{pygments::cks_type}
+// A list of color variants (type)
+def Colors = [Color]
+{pygments}
+
+{pygments::cks_value}
+// A list of color variants (value)
+[
+  Orange
+  Orange, HtmlColor: "#ff20bb"
+  Black, Black, Rgb: { Red = 12, Green = 24, Blue = 0 }
+]
+
+{pygments::cks_type}
+// A list of people records (type)
+def People = [Person]
+{pygments}
+
+{pygments::cks_value}
+// A list of people records (value)
+[
+  { First = "Scooby", Last = "Doo",    Age = 45 }
+  { First = "Shaggy", Last = "Rogers", Age = 47 }
+]
+{pygments}
+
+The two other collection types are "`Set`" and "`Map`".  "`Set`" is similar to "`List`" except:
+
+ * the order of the elements doesn't matter
+ * duplicates are not allowed
+
+"`Map`" is a pairing of keys with values.  Again, order doesn't matter.  Use "`->`" to separate keys from values.  For example:
+	
+{pygments::cks_type}
+// A job assignment mapping (type)
+def Jobs = Map(String,Person)
+{pygments}
+
+{pygments::cks_value}
+// A job assignment mapping (value)
+[
+  "Detective" -> { First = "Scooby", Last = "Doo",    Age = 45 }
+  "Assistant" -> { First = "Shaggy", Last = "Rogers", Age = 47 }
+]
+{pygments}
+
+## Nested Named Types
+
+Types can be nested within other types to limit their scope.  You can define new named types _within_ records and variants using "`def`":
+
+{pygments::cks_type}
+def AddressBookEntry = {
+  Name: FullName
+  Primary: ContactInfo
+  Other: Set(ContactInfo)
+
+  def FullName = {
+    First: String
+    Middle: [String]
+    Last: String
+  }
+
+  def ContactInfo = <
+    Email: EmailAddress
+    Icq: Nat
+    Phone: PhoneNumber
+  >
+
+  def EmailAddress = String
+  def PhoneNumber = String
+}
+{pygments}
+
+## Parameterized Types
+
+Defining a parameterized type is similar to defining a regular named type.  The difference is that the definition includes a list of named parameters that may be used as types in the definition:
+
+{pygments::cks_type}
+def Pair(A,B) = {
+  First: A
+  Second: B
+}
+{pygments}
+
+To use a parameterized type, you must provide a type for each parameter:
+
+{pygments::cks_type}
+def Point = Pair(Int,Int)
+{pygments}
+
+The above definition of "`Point`" is roughly equivalent to:
+
+{pygments::cks_type}
+def Point = {
+  First: Int
+  Second: Int
+}
+{pygments}
+
+## The optional type
+
+There is a built-in variant type to handle optional values.  Let's change the "`Person`" type to make "`Age`" optional.  
+
+{pygments::cks_type}
+def Person = {
+  First: String
+  Last: String
+  Age: Nat?
+}
+{pygments}
+
+To omit an optional value, use "`None`".  To provide a value, use "`Set:`", followed by the value.
+
+{pygments::cks_value}
+{ First = "Scooby", Last = "Doo",    Age = None }
+{ First = "Shaggy", Last = "Rogers", Age = Set: 47 }
+{pygments}
+
+If neither is provided, it is assumed to be "`None`".  The following value is equivalent to the first value above.
+
+{pygments::cks_value}
+{ First = "Scooby", Last = "Doo" }
+{pygments}
+
+## Inheritance
+
+Record and variant types can be defined to extend an existing type through inheritance.  For example:
+
+{pygments::cks_type}
+def Person = {
+  First: String
+  Last: String
+}
+
+def Boxer = Person+ {
+  Weight: String
+}
+{pygments}
+
+The `Boxer` record type includes all the fields of `Person` in addition to its `Weight` field.  `Boxer` is a _subtype_ of `Person` (though because it's just a data format and not a programming language, CKS itself has no concept of subtyping).
+
+The same can be done for records:
+
+{pygments::cks_type}
+def Answer = < Yes, No >
+def SpokespersonAnswer = Answer+ < NoComment >
+{pygments}
+
+The `SpokespersonAnswer` variant type has the options `Yes`, `No`, and `NoComment`.  Subtyping for variants works in the other direction of subtyping for records.  `Answer` is a subtype of `SpokespersonAnswer`.
+
+# Markup Syntax For Values
+
+WARNING!  Markup syntax is currently experimental.  It is currently only partially supported in the Java implementation.
+
+There is an alternative syntax for CKS values that looks like HTML.  The goal is not to be compatible with HTML or XML but to represent document-style data in a syntax that is easy to read and write.  I used HTML's syntax as a guideline because it seems to work well for document-style data.
+
+## Records
+
+A record's fields can be represented in one of two ways: either as an attribute or as child element.  For example, take the following value (written in the standard syntax):
+
+{pygments::cks_value}
+{
+  First = "Scooby"
+  Last = "Doo"
+}
+{pygments}
+
+Any one of the fields can be written in the markup syntax instead.  The name of the tag would be the field name:
+
+{pygments::cks_value}
+{
+  <First>Scooby</First>
+  <Last>Doo</>
+}
+{pygments}
+
+Notice that the closing tag for `<Last>` doesn't have the tag name.  The tag name is always optional on closing tags.
+
+The entire record can be written in markup syntax as well:
+
+{pygments::cks_value}
+<>
+  <First>Scooby</>
+  <Last>45</>
+</>
+{pygments}
+
+Since record values don't inherently have names, the "`-`" symbol was used for the tag name.  However, record tags can have names if their container has a name.  For example, assume that our record was actually part of a larger record:
+
+{pygments::cks_value}
+{
+  Name = {
+    First = "Scooby",
+    Last = "Doo"
+  }
+  Age = 45
+}
+{pygments}
+
+The markup syntax version would be:
+
+{pygments::cks_value}
+<>
+  <Name>
+    <First>Scooby</First>
+    <Last>Doo</Last>
+  </Name>
+  <Age>45</Age>
+</>
+{pygments}
+
+Fields can also be defined as HTML-style attributes:
+
+{pygments::cks_value}
+<>
+  <Name First="Scooby">
+    <Last>Doo</Last>
+  </Name>
+  <Age>45</Age>
+</>
+{pygments}
+
+Unlike with XML, attribute values can be complex data.  In fact, attributes are parsed like any other record field would be.  
+
+{pygments::cks_value}
+<
+  Name = {
+    First = "Scooby"
+    <Last>Doo</Last>
+  }
+>
+  <Age>45</Age>
+</>
+
+<
+  <Name First = "Scooby">
+    <Last>Doo</Last>
+  </>
+>
+  Age = 45
+</>
+{pygments}
+
+## Variants
+
+For variants, the tag name is the selected option name.  For example, take the four variant values from before:
+
+{pygments::cks_value}
+Orange
+HtmlColor: "#ff20bb"
+Black
+Rgb: { Red = 12, Green = 24, Blue = 0 }
+{pygments}
+
+Written in markup syntax:
+
+{pygments::cks_value}
+<Orange/>
+<HtmlColor>#ff20bb</>
+<Black/>
+<Rgb Red=12>
+  <Green>24</>
+  <Blue>0</>
+</>
+{pygments}
+
+## Lists
+
+TODO:
+
+## Mixed Content
+
+TODO:

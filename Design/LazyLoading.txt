@@ -1,0 +1,10 @@
+----------------------------
+Lazy Loading
+
+   parse(InputFile) -> RootHandle
+
+The 'parse' function doesn't really load anything from the file.  The actual data is loaded and marshalled only when you access it (i.e. the getters cause the file to be read).
+
+Probably requires a binary format to be efficient.
+
+One disadvantage is that you don't know if the file is valid.  Every getter could potentially die with a "invalid format" error.

@@ -1,0 +1,18 @@
+{
+	Point1: Point
+	Point2: Pair(Integer, Integer)
+	Point3: IntegerPairAlias
+
+	def Point = {
+		X: Integer
+		Y: Integer
+	}
+
+	def Pair(A, B) = {
+		First: A
+		Second: B
+	}
+
+	def IntegerPairAlias = Pair(Integer, Integer)
+
+}

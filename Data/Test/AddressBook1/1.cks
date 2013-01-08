@@ -1,0 +1,25 @@
+[
+	{
+		Name = {
+			First = "Scooby", Last = "Doo", Middle = ["Dooby"]
+		}
+
+		Contact = [
+			Phone: "123-456-7890"
+			Id: 45
+		]
+	}
+
+	{
+		Name = {
+			Middle = [],
+			First = "Scrappy"
+			Last = "Doo",
+		}
+
+		Contact = [
+			Phone: "123-456-7890"
+			Id: 12
+		]
+	}
+]

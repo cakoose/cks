@@ -1,0 +1,20 @@
+----------------------------
+Static Verifiability (of this tool)
+
+This isn't really about the CKS data type but about the Java code in this particular implementation.
+
+Currently, there are lots of things for which there is no static guarantee.  Just a bunch of runtime checks.  I think Scala's type system might be able to help a little.  At least its "case classes" will get rid of all the "badType(...)" fall-throughs.
+
+----------------------------
+Resolution
+
+The resolution operation is (kind of) a function with type [Type -> Type].  Though the implementation tries to resolve all names and check all kinds, there is no statically visible change in the return type.
+
+I think it's impractical to require a two sets of types for the resolved vs. unresolve state (ex: Type, ResolvedType, Ref, ResolvedRef, etc).
+
+----------------------------
+Value-Type correspondence
+
+The value parsing function is [(Input, Type) -> Value].  There is no static correspondence between the input type and the output value.
+
+One possibility is to have Value keep references to the appropriate Type.  For example, a VVariant could reference the TMember it has selected, instead of just a simple String.  Strings are for losers.

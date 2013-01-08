@@ -1,0 +1,4 @@
+[
+	{ FirstName = "Scooby", LastName = "Doo", Age = 45 }
+	{ FirstName = "Shaggy", LastName = "Rogers", Age = 47 }
+]

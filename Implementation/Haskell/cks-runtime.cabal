@@ -1,0 +1,13 @@
+Name: cks-runtime
+Version: 0.1
+Description: CKS Runtime Library
+License-file: License.txt
+Author: Kannan Goundan
+Maintainer: kannan@cakoose.com
+Build-Type: Simple
+Cabal-Version: >= 1.2
+
+Library
+   Build-Depends: base, utf8-string >= 0.3, containers >= 0.2, parsec >= 2.1, array >= 0.2, bytestring >= 0.9
+   Hs-Source-Dirs: Source
+   Exposed-Modules: Data.Cks.TextModel Data.Cks.TextReader Data.Cks.TextParser Data.Cks.TextWriter Data.Cks.BinaryReader Data.Cks.BinaryWriter Data.Cks.MaybeE

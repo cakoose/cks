@@ -1,0 +1,5 @@
+{
+	Point1 = { X     = 10, Y      = 10 }
+	Point2 = { First = 10, Second = 10 }
+	Point3 = { First = 10, Second = 10 }
+}

@@ -1,0 +1,10 @@
+default_meta_info:
+  Webgen::SourceHandler::Page:
+    siteName: "CKS Data Format"
+
+patterns:
+  Copy:
+    add: ["**/cks-workbench.jar"]
+
+tag.pygments.tab_width: 2
+tag.filepygments.tab_width: 2

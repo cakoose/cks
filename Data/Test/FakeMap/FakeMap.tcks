@@ -1,0 +1,9 @@
+def FakeMap = StringMap(Int?)
+
+def StringMap(T) = List(Map(String,T))
+
+def Map(K,V) = List(Entry(K,V))
+
+def Entry(X,Y) = {
+	Key: X, Value: Y
+}

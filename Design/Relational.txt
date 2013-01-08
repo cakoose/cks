@@ -1,0 +1,6 @@
+----------------------------
+Relational Features
+
+Right now, we only support tree structures.  What about a general graph?  We don't want it to be completely transparent, because then the client can't really see what's going on.
+
+The relational model has keys and stuff.  Maybe that stuff can be adopted?  Essentially, fuse the relational model with algebraic types.

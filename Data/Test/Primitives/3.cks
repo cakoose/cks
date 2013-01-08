@@ -1,0 +1,22 @@
+{
+	Nat64 = 0
+	Nat32 = 0
+	Nat16 = 0
+	Nat8 = 0
+	Int64 = 0
+	Int32 = 0
+	Int16 = 0
+	Int8 = 0
+
+	MNat64 = Set: 0
+	MNat32 = Set: 0
+	MNat16 = Set: 0
+	MNat8 = Set: 0
+	MInt64 = Set: 0
+	MInt32 = Set: 0
+	MInt16 = Set: 0
+	MInt8 = Set: 0
+
+	MMInt8 = Set: Set: 12
+	MMMInt8 = Set: Set: None
+}

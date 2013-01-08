@@ -1,0 +1,24 @@
+#! /bin/bash
+set -e
+
+lib_dir="../../../Implementation/C#/Output"
+
+if [ $# -ne 0 ]; then
+	echo "Expecting zero command-line arguments, received $#." 1>&2
+	exit 1
+fi
+
+dlls=(Cks.Core.dll Cks.Text.Reader.dll Cks.Text.Writer.dll)
+refs=()
+for dll in "${dlls[@]}"; do
+	refs+=("-reference:$lib_dir/$dll")
+done
+
+[ ! -d out ] || rm -r out
+mkdir -p out
+
+echo "- Generating bindings..."
+cks gen-c# ../students.tcks Example.Students out/Students.cs
+
+echo "- Compiling..."
+gmcs "${refs[@]}" -out:out/AddShaggy.exe -main:AddShaggy AddShaggy.cs out/Students.cs

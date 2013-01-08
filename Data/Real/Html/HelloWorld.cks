@@ -1,0 +1,16 @@
+<->
+
+<head>
+	<title>Hello World</title>
+</head>
+
+<body>
+	<h1>Dude</h1>
+	<p class=<dude name={wtf=true, stfu=false:maybe}>"goose"</dude>>
+		Hello <em>Dude</em>
+	</p>
+
+	You smell
+</body>
+
+</>

@@ -1,0 +1,5 @@
+def Maps = {
+	IntMap: Map(Int,Int)
+	StringMap: Map(String,String)
+	MaybeBoolMap: Map(Bool?,Bool?)
+}

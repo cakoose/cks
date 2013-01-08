@@ -1,0 +1,15 @@
+{
+	IntList = Cons: { Head = 1, Tail = Cons: { Head = 2, Tail = Nil } }
+
+	StringList = Nil
+
+	MaybeBoolList = Cons: {
+		Tail = Cons: {
+			Head = Set: True
+			Tail = Cons: {
+				Head = Set: False,
+				Tail = Nil
+			}
+		},
+	}
+}

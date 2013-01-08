@@ -1,0 +1,44 @@
+---
+title: "Variant Types"
+--- name:content pipeline:tags,maruku
+# Variant Types
+
+CKS variant types are also known as "tagged unions" or "disjoint unions".  Functional languages like Haskell and ML/OCaml support them, but unfortunately most C-derived languages do not.  They are the natural complement to the record/type.
+
+Let's define a record type "Person" with three fields:
+
+{pygments::cks_type}
+def Person = {
+  Name: String
+  Age: Int
+  Employed: Bool
+}
+{pygments}
+   
+To create a value of that type, we must provide values for all the fields:
+
+{pygments::cks_value}
+{ Name = "Scooby Doo", Age = 53, Employed = False }
+{pygments}
+
+For a variant, you need to provide a value for exactly one of it's _options_.  So let's define an example variant type "Contact" with three options:
+
+{pygments::cks_type}
+def Contact = <
+  Email: String
+  Icq: Int
+  Unknown
+>
+{pygments}
+
+To define a variant value, you need to select one option and supply it's value.  Here are three possible values, one on each line:
+
+{pygments::cks_value}
+Email: "sdoo@mysterymachine.org"
+Icq: 129402139
+Unknown
+{pygments}
+
+Why are variants so useful?  Well, for one, they can model C's "enum" and "union" constructs uniformly.  This also means they can model optionality (a more general form of C's "null pointer" concept).
+
+The best way to see how variants are useful is probably to try them out.  Try modeling your data with CKS types and see if you can  take advantage of variant types.

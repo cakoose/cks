@@ -1,0 +1,9 @@
+def Students = List(Student)
+
+def Student = {
+  Name: String
+  Age: Nat16      // unsigned 16-bit integer
+  Sex: Sex        // "Male" or "Female" (defined below)
+}
+
+def Sex = < Male, Female >   // a "variant" type

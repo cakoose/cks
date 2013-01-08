@@ -1,0 +1,61 @@
+#! /bin/sh
+bytecode_dir_rel="Output/Bytecode"
+library_dir_rel="Libraries"
+main_class="cks.test.Main"
+
+die() {
+	for line in "$@"; do
+		echo "$line" > /dev/stderr
+	done
+	exit 1
+}
+
+# Locate the script file.  Cross symlinks if necessary.
+loc="$0"
+while [ -h "$loc" ]; do
+	ls=`ls -ld "$loc"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '/.*' > /dev/null; then
+		loc="$link"  # Absolute link
+	else
+		loc="`dirname "$loc"`/$link"  # Relative link
+	fi
+done
+
+base_dir=`dirname "$loc"`
+
+# 1. Check if the path to the Java VM executable was specified in JAVACMD.
+if [ -n "$JAVACMD" ]; then
+	java="$JAVACMD"
+	[ -x "$java" ] || die \
+		"The file at \"\$JAVACMD\" isn't executable.  Did you set the \"JAVACMD\"" \
+		"environment variable correctly?  Current value:" \
+		"   JAVACMD = \"$JAVACMD\""
+# 2. Check if the path to the JRE installation was specified in JAVA_HOME.
+elif [ -n "$JAVA_HOME" ]; then
+	java="$JAVA_HOME/bin/java"
+	[ -x "$java" ] || die \
+		"The file at \"\$JAVA_HOME/bin/java\" isn't executable.  Did you set" \
+		"the \"JAVA_HOME\" environment variable correctly?  Current value:" \
+		"   JAVA_HOME = \"$JAVA_HOME\""
+# 3. If neither is set, just use an unqualified "java" as the command name.
+else
+	java="java"
+fi
+
+bytecode_dir="$base_dir/$bytecode_dir_rel"
+library_dir="$base_dir/$library_dir_rel"
+
+[ -d "$bytecode_dir" ] || die "The directory that should contain the compiled class files doesn't exist:" \
+		"  \"$bytecode_dir\"" \
+	"Maybe you didn't run the build?"
+
+cp=""
+for dir in "$bytecode_dir"/*; do
+	cp="$cp:$dir"
+done
+for jar in "$library_dir"/*.jar; do
+	cp="$cp:$jar"
+done
+
+exec "$java" -ea -classpath "$cp" "$main_class" "$@"

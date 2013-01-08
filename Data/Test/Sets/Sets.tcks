@@ -1,0 +1,5 @@
+def Sets = {
+	IntSet: Set(Int)
+	StringSet: Set(String)
+	MaybeBoolSet: Set(Bool?)
+}

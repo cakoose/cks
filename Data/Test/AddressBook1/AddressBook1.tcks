@@ -1,0 +1,18 @@
+def AddressBook1 = List(Entry)
+
+def Entry = {
+	Name: Name
+	Contact: List(Contact)
+}
+
+def Name = {
+	First: String
+	Middle: List(String)
+	Last: String
+}
+
+def Contact = <
+	Phone: String
+	Email: String
+	Id: Nat
+>

@@ -1,0 +1,12 @@
+[        // square brackets for lists
+  {        // braces for records
+    Name = "Scooby Doo"
+    Age = 55
+    Sex = Male
+  }
+  {
+    Name = "Wilma Flintstone"
+    Age = 4012
+    Sex = Female
+  }
+]

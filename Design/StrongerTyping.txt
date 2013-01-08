@@ -1,0 +1,76 @@
+----------------------------
+Stronger Typing
+
+Currently, there is no data validation mechanism stronger than "this is an integer".  People are going to want to say "this integer is between 1 and 255" or "this string matches the following regex".
+
+Most typing requirements can probably be specified declaratively.  Some kind of additional annotation on a type:
+
+  def Address = {
+    Host: String
+      @(Length > 0)
+      @(Regex /[A-Za-z0-9\.]*/)
+    Port: Integer
+      @(Min 0)
+      @(Max 65535)
+  }
+
+----------------------------
+Opaque Type
+
+Need a framework that makes adding validators easy.  An "opaque" type needs to be able to expose the type of validations it allows.  An opaque type might want to change the binding code it generates based on the set of validators.  For example, if the integer lies within a certain range, we can start using "Integer" or "Short" instead of "BigInteger".
+
+----------------------------
+Uniqueness
+
+When representing a set or map, need a way to make sure the types are unique.  Maybe we need an RDBMS-like "unique" declaration?
+
+  def Map(K, V) = [Entry(K, V)]
+    @(unique [*].Key)
+
+  def Entry(K, V) = {
+    Key: K
+    Value: V
+  }
+
+----------------------------
+References
+
+Need a way to have certain values reference other values.  For example, a graph data type might want to have a list of nodes followed by a list of edges:
+
+  def Graph = {
+    Nodes: [Node]
+    def Node = {
+      String: Name
+    }
+
+    Edges: [Edge]
+    def Edge = {
+      From: String
+      To: String
+    }
+  }
+
+How do we ensure the "From" and "To" fields refer to valid nodes?  Maybe CKS needs a generic "reference" mechanism:
+
+  def Edge = {
+    From: &Node
+    To: &Node
+  }
+
+Don't know exactly how this would work, but I don't think it should be totally transparent to the consumer of the data.
+
+What about back references?
+
+----------------------------
+Static Typing
+
+In the context of CKS, there is no difference between static and dynamic typing.  The data never changes.  So, like in a dynamically typed language, the type system is really easy to implement but we don't lose anything because the data is static and so it's no worse than a static type system.
+
+But things become harder if we wanted a programming language that is built on CKS types (query or transformation language, for example).  Not all of our arbitrary validation code can be extended to a statically typed programming language.  How much can we hold on to?
+
+----------------------------
+Sage
+
+UCSC's "Sage" type system lets you say lots of things about a type.  Some of it is checked statically, some dynamically.
+
+   http://sage.soe.ucsc.edu/

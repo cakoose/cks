@@ -1,0 +1,11 @@
+-keepclassmembers enum * {
+	public static **[] values();
+	public static ** valueOf(java.lang.String);
+}
+-dontobfuscate
+-optimizationpasses 3
+-allowaccessmodification
+-keep public class cks.workbench.Workbench {
+    public static void main(java.lang.String[]);
+}
+-keep public class cks.workbench.WorkbenchApplet
